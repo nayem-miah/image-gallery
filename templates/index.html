@@ -10,7 +10,7 @@
                 Categories
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">All</li>
+                <li class="list-group-item active">All</li>
                 {% for cate in category %}
                    <li class="list-group-item"> {{cate.name}}</li>
                 {% endfor %}
@@ -25,7 +25,9 @@
            {% for gall in gallery %}
              <div class="col-md-4">
                 <div class="card">
-                <a href="{% url 'view' gall.id %}"><img src="{{gall.photo.url}}" class="card-img-top" alt="..."></a>
+                {% if gall.photo %}
+                    <a href="{% url 'view' gall.id %}"><img src="{{gall.photo.url}}" class="card-img-top" alt="..."></a>
+                {% endif %}  
                     <div class="card-body">
                          <p>{{gall.description}}</p>
                         <b class="card-text">Category: {{gall.catagory}}</b>

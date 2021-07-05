@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import *
 
 
@@ -20,6 +20,34 @@ def add(request):
 
     template = 'add.html'
     category = Catagory.objects.all()
+    
+    if request.method == 'POST':
+        data = request.POST  
+        imag = request.FILES.get('im')
+   
+        print(data)
+        print(data)
+        print(data)
+        print(data)
+        print(data)
+        print(data)
+        if data['category'] != 'none':
+            category = Catagory.objects.get(id = data['category'])
+        elif data['new_category'] != '':
+            category, created = Catagory.objects.get_or_create(name=data['new_category'])
+        else:
+            category = None
+        
+        photo = Photo.objects.create(photo = imag,catagory = category,description=data['description'])
+        
+        return redirect('index')
+
+        # "data = request.POST" by this code we can grab all data
+        # "img = request.FILES" by this code we can grab all image
+        # "data = request.POST.get('description')" by this code we can grab only description data nothing more
+        # "img = request.FILES.get('image')" by this code we can grab only image's picture data nothing more
+       
+        
 
     context={
 
