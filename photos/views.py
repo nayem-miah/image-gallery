@@ -24,13 +24,6 @@ def add(request):
     if request.method == 'POST':
         data = request.POST  
         imag = request.FILES.get('im')
-   
-        print(data)
-        print(data)
-        print(data)
-        print(data)
-        print(data)
-        print(data)
         if data['category'] != 'none':
             category = Catagory.objects.get(id = data['category'])
         elif data['new_category'] != '':
