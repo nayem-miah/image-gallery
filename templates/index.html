@@ -1,13 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Hi this is a test for my template ok done hello how are you?
-    kemon aso? ami valo asi tomi ki koro? ami bose asi </h2>
-</body>
-</html>
+ {% extends 'base.html' %}
+ {% block title %}Photo gallery home{% endblock title %}
+ {% block content %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+            <div class="card-header">
+                Categories
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">All</li>
+                {% for cate in category %}
+                   <li class="list-group-item"> {{cate.name}}</li>
+                {% endfor %}
+                
+                   <a class="btn btn-success btn-block btn-sm m-2 " href="{% url 'add' %}">Add Photo</a>
+                
+            </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+           <div class="row">
+           {% for gall in gallery %}
+             <div class="col-md-4">
+                <div class="card">
+                <a href="{% url 'view' gall.id %}"><img src="{{gall.photo.url}}" class="card-img-top" alt="..."></a>
+                    <div class="card-body">
+                         <p>{{gall.description}}</p>
+                        <b class="card-text">Category: {{gall.catagory}}</b>
+                    </div>
+                <a href="{% url 'view' gall.id %}" class="btn btn-outline-dark btn-sm m-1">View</a>
+                </div>
+             </div> 
+             {% empty %}
+             <h2>No Photos...</h2>
+           {% endfor %}
+           </div>                
+        </div>
+      </div>
+    </div>
+
+
+
+{% endblock content %}
