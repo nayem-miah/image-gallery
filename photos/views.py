@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from .models import *
+from . form import EditForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
@@ -9,17 +11,37 @@ def index(request):
     cate = request.GET.get('categ')
     if cate == None:  # if we category name not found
 
-        gallry = Photo.objects.all()
+        post = Photo.objects.order_by('-id')  # ordered by last 6
 
+        paginator = Paginator(post, 9)
+        page = request.GET.get('page')
+        try:
+            post = paginator.page(page)
+        except PageNotAnInteger:
+            post = paginator.page(1)
+
+        except EmptyPage:
+            post = paginator.page(paginator.num_pages)
     else:
-        gallry = Photo.objects.filter(
+        post = Photo.objects.filter(
             catagory__name=cate)  # if category name found then it will filter. "catagory__name" here catagory is a object of Photo class and catagory is also forign key of Catagory class. So catagory object means Catagory class and Catagory class has a name object that's how " catagory__name" works
+
+        paginator = Paginator(post, 6)
+        page = request.GET.get('page')
+        try:
+            post = paginator.page(page)
+        except PageNotAnInteger:
+            post = paginator.page(1)
+
+        except EmptyPage:
+            post = paginator.page(paginator.num_pages)
 
     category = Catagory.objects.all()
 
     context = {
         'categories': category,
-        'gallery': gallry,
+        'gallery': post,
+        'page_obt': page,
     }
 
     return render(request, template_name=template, context=context)
@@ -70,5 +92,32 @@ def view(request, pk):
     context = {
 
         'views': gallry
+    }
+    return render(request, template_name=template, context=context)
+
+
+def delete(request, pk):
+
+    if request.method == 'POST':
+        gallery = Photo.objects.get(id=pk)
+        gallery.delete()
+    return redirect('index')
+
+
+def edit(request, pk):
+    template = 'edit.html'
+
+    if request.method == 'POST':
+        gallery = Photo.objects.get(id=pk)
+        editform = EditForm(request.POST, request.FILES, instance=gallery)
+        editform.save()
+        return redirect('index')
+
+    else:
+        gallery = Photo.objects.get(id=pk)
+        editform = EditForm(instance=gallery)
+
+    context = {
+        'edit_form': editform
     }
     return render(request, template_name=template, context=context)

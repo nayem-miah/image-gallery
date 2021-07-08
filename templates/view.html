@@ -4,10 +4,23 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col">
-      <a href="{% url 'index' %}" class="btn btn-dark my-3"> Go back</a>
+    <div class="d-flex justify-content-center">
+      <a href="{% url 'index' %}" class="btn btn-success m-1"> Go back</a>
+      
+      <a href="{% url 'edit' views.id %}" class="btn btn-warning m-1 px-4"> Edit</a>
+
+      <form class="m-1" method="POST" action="{% url 'delete' views.id %}">
+        {% csrf_token %}
+       
+        <input value="Delete" type="submit" class="btn btn-danger px-3">
+      </form>
+      
+      
+      
+    </div>
 
       <div style="height: 90vh">
-        <img
+        <img 
           style="max-width: 100%; max-height: 100%"
           src="{{views.photo.url}}"
           alt="image not found"
