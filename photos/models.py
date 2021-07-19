@@ -7,7 +7,8 @@ class Catagory(models.Model):
 
 class Photo(models.Model):
     catagory = models.ForeignKey(Catagory, on_delete=models.SET_NULL, null=True, blank=True)
-    description = models.TextField(max_length=300)
+    description = models.TextField(max_length=320)
     photo = models.ImageField(null=False, blank=False)
     def __str__(self):
         return self.description
+
