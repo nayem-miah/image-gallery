@@ -112,7 +112,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static', ]
 MEDIA_URL = '/images/'
 MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_ROOT = BASE_DIR / 'collect_fill'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Default primary key field type
