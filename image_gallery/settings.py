@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-zu$6dzjd*4bs8^u_aoi31q276y5sy049b1vjcr#mr+%(u-prly
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gallery-app-1.herokuapp.com', 'localhost', '127.0.0.1:8000/']
 
 
 # Application definition
@@ -42,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'image_gallery.urls'
